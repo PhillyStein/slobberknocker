@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
 
-    <div class="container d-block justify-content-center align-items-center w-25 p-5">
+    <div class="container d-block justify-content-center align-items-center w-25" id="container">
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="">
             <div id="form1">
                 <div class="mb-3">
@@ -44,6 +44,14 @@
                 </div>
             </div>
             <div id="form3">
+                <div class="d-flex justify-content-center">
+                    <?php include "images/WorldMap.svg" ?>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p class="text-warning" id="city_name">NAME OF CITY</p>
+                </div>
+            </div>
+            <div id="form4">
                 <div class="mb-3">
                     <label for="continent" class="form-label text-light">Where is your company based?</label>
                     <select class="form-select continent" id="continent"aria-label="Default select continent" onchange="changeRegion();">
@@ -115,13 +123,19 @@
                     </select>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary" id="btn-back" disabled>Back</button>
-            <button type="button" class="btn btn-warning" id="btn-next" disabled>Next</button>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" id="btn-back" disabled>Back</button>
+                <button type="button" class="btn btn-warning" id="btn-next" disabled>Next</button>
+            </div>
         </form>
     </div>
 </body>
 
 <script>
+    const container = document.getElementById('container');
+
+    container.className = "container d-block justify-content-center align-items-center w-25";
+
     let city = '';
     const continent = document.getElementById('continent');
     const africa = document.getElementById('africa');
@@ -146,9 +160,11 @@
     const form1 = document.getElementById('form1');
     const form2 = document.getElementById('form2');
     const form3 = document.getElementById('form3');
+    const form4 = document.getElementById('form4');
     let formStage = 1;
     form2.style.display = "none";
     form3.style.display = "none";
+    form4.style.display = "none";
 
     function hideAll() {
         africa.style.display = "none";
@@ -194,6 +210,7 @@
                 form1.style.display = "none";
                 form2.style.display = "block";
                 formStage = 2;
+                container.className = "container d-block justify-content-center align-items-center w-25";
                 checkForm();
                 toggleButton(backButton, "enabled");
                 break;
@@ -202,13 +219,15 @@
                 form2.style.display = "none";
                 form3.style.display = "block";
                 formStage = 3;
+                container.className = "container d-block justify-content-center align-items-center w-75";
                 checkForm();
                 break;
 
             case 3:
-                //form3.style.display = "none";
-                //form3.style.display = "block";
+                //form4.style.display = "none";
+                //form4.style.display = "block";
                 formStage = 4;
+                container.className = "container d-block justify-content-center align-items-center w-25";
                 checkForm();
                 break;
         }
@@ -220,6 +239,7 @@
                 form1.style.display = "block";
                 form2.style.display = "none";
                 formStage = 1;
+                container.className = "container d-block justify-content-center align-items-center w-25";
                 checkForm();
                 toggleButton(backButton, "disabled");
                 break;
@@ -227,6 +247,7 @@
                 form3.style.display = "none";
                 form2.style.display = "block";
                 formStage = 2;
+                container.className = "container d-block justify-content-center align-items-center w-25";
                 checkForm();
                 break;
         }
@@ -315,6 +336,17 @@
                 break;
         }
         return (city != '') ? true : false;
+    }
+
+    document.addEventListener('keypress', logKey);
+
+    function logKey(e) {
+        if(e.code=="ArrowRight") {
+            nextForm();
+        }
+        if(e.code=="ArrowLeft") {
+            backForm();
+        }
     }
 </script>
 
