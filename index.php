@@ -18,8 +18,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
 
     <div class="container d-block justify-content-center align-items-center w-25" id="container">
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="">
-            <div id="form1">
+        <form action="check-sign-up.php" method="POST" class="">
+            <div id="form1" class="mt-3">
                 <div class="mb-3">
                     <label for="username" class="form-label text-light">Username</label>
                     <input type="text" class="form-control" id="username" name="username" onchange="checkForm();"></input>
@@ -37,21 +37,27 @@
                     <input type="password" class="form-control" id="confirm" onchange="checkForm();"></input>
                 </div>
             </div>
-            <div id="form2">
+            <div id="form2" class="mt-3">
                 <div class="mb-3">
                     <label for="company" class="form-label text-light">What would you like your company to be called?</label>
                     <input type="text" class="form-control" id="company" name="company" onchange="checkForm();"></input>
                 </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label text-light">What city is your company based in?</label>
+                    <input type="text" class="form-control" id="location" name="location" onchange="checkForm();"></input>
+                </div>
             </div>
+<!--
             <div id="form3">
                 <div class="d-flex justify-content-center">
-                    <?php include "images/WorldMap.svg" ?>
+                    <?php // include "images/WorldMap.svg" ?>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <p class="text-warning" id="city_name">NAME OF CITY</p>
+                    <p class="text-warning" id="city_name">Choose Your Starting Location</p>
                 </div>
             </div>
-            <div id="form4">
+            
+            <div id="form3">
                 <div class="mb-3">
                     <label for="continent" class="form-label text-light">Where is your company based?</label>
                     <select class="form-select continent" id="continent"aria-label="Default select continent" onchange="changeRegion();">
@@ -123,9 +129,11 @@
                     </select>
                 </div>
             </div>
+-->
             <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-secondary" id="btn-back" disabled>Back</button>
                 <button type="button" class="btn btn-warning" id="btn-next" disabled>Next</button>
+                <button type="submit" class="btn btn-warning" id="btn-submit">Submit</button>
             </div>
         </form>
     </div>
@@ -147,8 +155,10 @@
 
     const backButton = document.getElementById('btn-back');
     const nextButton = document.getElementById('btn-next');
+    const submitButton = document.getElementById('btn-submit');
     toggleButton(backButton, "disabled");
     toggleButton(nextButton, "disabled");
+    submitButton.style.display = "none";
 
     const username = document.getElementById('username');
     const email = document.getElementById('email');
@@ -159,12 +169,12 @@
 
     const form1 = document.getElementById('form1');
     const form2 = document.getElementById('form2');
-    const form3 = document.getElementById('form3');
-    const form4 = document.getElementById('form4');
+    //const form3 = document.getElementById('form3');
+    //const form4 = document.getElementById('form4');
     let formStage = 1;
     form2.style.display = "none";
-    form3.style.display = "none";
-    form4.style.display = "none";
+    //form3.style.display = "none";
+    //form4.style.display = "none";
 
     function hideAll() {
         africa.style.display = "none";
@@ -175,7 +185,7 @@
         southam.style.display = "none";
     }
 
-    hideAll();
+    // hideAll();
 
     nextButton.addEventListener('click', nextForm);
     backButton.addEventListener('click', backForm);
@@ -213,14 +223,16 @@
                 container.className = "container d-block justify-content-center align-items-center w-25";
                 checkForm();
                 toggleButton(backButton, "enabled");
+                nextButton.style.display = "none";
+                submitButton.style.display = "block";
                 break;
 
             case 2:
-                form2.style.display = "none";
-                form3.style.display = "block";
-                formStage = 3;
-                container.className = "container d-block justify-content-center align-items-center w-75";
-                checkForm();
+                //form2.style.display = "none";
+                //form3.style.display = "block";
+                //formStage = 3;
+                //container.className = "container d-block justify-content-center align-items-center w-75";
+                //checkForm();
                 break;
 
             case 3:
@@ -341,11 +353,8 @@
     document.addEventListener('keypress', logKey);
 
     function logKey(e) {
-        if(e.code=="ArrowRight") {
+        if(e.code=="KeyN") {
             nextForm();
-        }
-        if(e.code=="ArrowLeft") {
-            backForm();
         }
     }
 </script>
